@@ -1,12 +1,12 @@
-import {Route, Routes } from "react-router-dom";
-import {ProductPage} from "src/page/ProductPage";
+import { Suspense } from "react";
+import { Outlet } from "react-router-dom";
 
 export const App = () => {
     return (
         <div>
-            <Routes>
-                <Route path={'/products'} element={<ProductPage />} />
-            </Routes>
+            <Suspense>
+                <Outlet />
+            </Suspense>
         </div>
     )
 }
