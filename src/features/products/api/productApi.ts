@@ -14,12 +14,12 @@ type PayloadArgs = {
 
 export const productApi = {
     fetchIds(payload:GetIdsPayload<PayloadArgs>) {
-        return instance.post('',payload)
+        return instance.post('http://api.valantis.store:40000/',payload)
     },
     fetchItems(payload: GetIdsPayload<{ ids: string[] }>) {
-        return instance.post('', payload)
+        return instance.post('http://api.valantis.store:40000/', payload)
     },
     fetchBrands(payload: GetIdsPayload<{field: string}>) {
-        return instance.post('',payload)
+        return instance.post('http://api.valantis.store:40000/',payload)
     }
 }
