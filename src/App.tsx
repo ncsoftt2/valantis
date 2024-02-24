@@ -1,9 +1,12 @@
+import {Route, Routes } from "react-router-dom";
 import {ProductPage} from "src/page/ProductPage";
 
 export const App = () => {
     return (
         <div>
-            <ProductPage />
+            <Routes>
+                <Route path={'/products'} element={<ProductPage />} />
+            </Routes>
         </div>
     )
 }
