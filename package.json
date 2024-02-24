@@ -1,7 +1,6 @@
 {
   "name": "valantis",
   "version": "0.1.0",
-  "homepage": "https://ncsoftt2.github.io/valantis",
   "private": true,
   "dependencies": {
     "@fontsource-variable/montserrat": "^5.0.17",
