@@ -8,18 +8,16 @@ type GetIdsPayload<T> = {
 type PayloadArgs = {
     offset?: number
     limit?: number
-} & { product?: string }
-    | { price?: number }
-    | {brand?: string}
+} & { [key:string]: string | number}
 
 export const productApi = {
     fetchIds(payload:GetIdsPayload<PayloadArgs>) {
-        return instance.post('http://api.valantis.store:40000/',payload)
+        return instance.post('',payload)
     },
     fetchItems(payload: GetIdsPayload<{ ids: string[] }>) {
-        return instance.post('http://api.valantis.store:40000/', payload)
+        return instance.post('', payload)
     },
     fetchBrands(payload: GetIdsPayload<{field: string}>) {
-        return instance.post('http://api.valantis.store:40000/',payload)
+        return instance.post('',payload)
     }
 }

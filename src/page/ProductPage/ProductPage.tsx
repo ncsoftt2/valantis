@@ -1,12 +1,13 @@
 import {useAppDispatch} from "src/common/hooks/useAppDispatch";
 import {useAppSelector} from "src/common/hooks/useAppSelector";
 import {useSearchParams} from "react-router-dom";
-import {ChangeEvent, useEffect, useState} from "react";
+import {useEffect} from "react";
 import {productThunk} from "src/features/products/slice/slice";
-import s from "./ProductPage.module.css";
-import {testFunction} from "src/testFunction";
-import {SelectBrands} from "src/page/ProductPage/SelectBrands";
+import {useTestFunction} from "src/useTestFunction";
+import {FilterProducts, Products} from "src/features/products";
 
+import s from "src/page/ProductPage/ProductPage.module.scss";
+import {ProductSkeleton} from "src/common/ui/ProductSkeleton/ProductSkeleton";
 
 
 // V1
@@ -205,83 +206,31 @@ import {SelectBrands} from "src/page/ProductPage/SelectBrands";
 const ProductPage = () => {
     const dispatch = useAppDispatch()
     const productIds = useAppSelector(state => state.products.ids)
-
+    const status = useAppSelector(state => state.products.status)
 
     const [searchParams, setSearchParams] = useSearchParams({})
     const offset = Number(searchParams.get('offset')) || 0
     const limit = Number(searchParams.get('limit')) || 50
-    const price = searchParams.get('price') === null ? undefined : Number(searchParams.get('price'))
+    const {action,param,initialKey} = useTestFunction()
 
-    const [productName, setProductName] = useState('')
-
-
-    const handleChangeProductName = (e: ChangeEvent<HTMLInputElement>) => {
-        const target = e.currentTarget.value
-        setProductName(target.trim())
-    }
-
-    const handleClickSearchProductByName = () => {
-        if (productName.trim().length !== 0) {
-            searchParams.delete('offset')
-            searchParams.delete('price')
-            searchParams.set('action', 'filter')
-            searchParams.set('product', productName.trim())
-            setSearchParams(searchParams)
-            const payload = {
-                action: 'filter',
-                params: {
-                    product: productName.trim(),
-                    limit,
-                    offset
-                }
-            }
-            dispatch(productThunk.fetchIdsProduct(payload))
+    const payload = {
+        action,
+        params: {
+            [initialKey]: param,
+            offset,
+            limit
         }
     }
-
-    const handleChangeFilterByPrice = (e: ChangeEvent<HTMLInputElement>) => {
-        const target = Number(e.currentTarget.value)
-        searchParams.set('action', 'filter')
-        searchParams.set('price', target.toString())
-        searchParams.delete('offset')
-        searchParams.delete('product')
-        setSearchParams(searchParams)
-        const payload = {action:'filter',params: {price:target,limit, offset}}
-        dispatch(productThunk.fetchIdsProduct(payload))
-    }
-
-    const clearFilter = () => {
-        setSearchParams({})
-        const payload = {action:'get_ids',params: {limit, offset}}
-        dispatch(productThunk.fetchIdsProduct(payload))
-    }
-
-
-    const {action,param2,initialKey} = testFunction()
-
     useEffect(() => {
-        const payload = {
-            action,
-            params: {
-                [initialKey]: param2,
-                offset,
-                limit
-            }
-        };
-        dispatch(productThunk.fetchIdsProduct(payload));
-    }, [offset])
+        dispatch(productThunk.fetchIdsProduct(payload)).unwrap()
+            .catch(() => {
+                dispatch(productThunk.fetchIdsProduct(payload))
+            })
+    }, [offset,action])
 
     return (
         <section className={s.products_list}>
-            <div className={s.filterWrapper}>
-                <input value={productName} onChange={handleChangeProductName}/>
-                <button onClick={handleClickSearchProductByName}>поиск</button>
-            </div>
-            <div style={{display: 'flex', alignItems: 'center'}}>
-                <input type="number" value={price} onChange={handleChangeFilterByPrice}/>
-            </div>
-            <button onClick={clearFilter}>сбросить</button>
-            <SelectBrands />
+            <FilterProducts limit={limit} offset={offset}/>
             {/*<div className={s.btns_wrapper}>*/}
             {/*    {!productsIdPrevBtnLength &&*/}
             {/*        <button className={s.btn} disabled={offset === 0}*/}
@@ -291,9 +240,12 @@ const ProductPage = () => {
             {/*        <button className={s.btn} onClick={() => handleChangeNext(offset + 50)}>&gt;</button>*/}
             {/*    }*/}
             {/*</div>*/}
-            <div className={s.products}>
-                {productIds && productIds.length > 0 && <Products/>}
-            </div>
+
+            {/*{status === 'loading' && <ProductSkeleton />}*/}
+            {/*{productIds && productIds.length > 0 && <Products/>}                   */}
+
+            {productIds && productIds.length > 0 && <Products/>}
+
         </section>
     )
 
@@ -307,29 +259,3 @@ export default ProductPage
 
 
 
-const Products = () => {
-
-    const products = useAppSelector(state => state.products.products)
-    const productIds = useAppSelector(state => state.products.ids)
-    const dispatch = useAppDispatch()
-    useEffect(() => {
-        dispatch(productThunk.fetchProducts(productIds))
-    }, [productIds])
-
-    return (
-        <>
-            {products.map((p) => {
-                return (
-                    <div className={s.product} key={p.id}>
-                        <div className={s.product_title}>{p.product}</div>
-                        <div className={s.product_id}>{p.id}</div>
-                        <div className={s.product_brand}>бренд: {p.brand || 'неизвестно'}</div>
-                        <div className={s.product_price}>
-                            цена: <span className={s.product_price_item}>{p.price.toLocaleString('ru-RU')}</span>
-                        </div>
-                    </div>
-                )
-            })}
-        </>
-    )
-}

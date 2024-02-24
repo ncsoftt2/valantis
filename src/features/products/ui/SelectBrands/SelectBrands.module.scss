@@ -1,0 +1,9 @@
+.select {
+  padding: 7px 3px;
+  font-size: 16px;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: none;
+  }
+}

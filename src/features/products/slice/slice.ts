@@ -1,4 +1,4 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice, isFulfilled, isPending, isRejected} from "@reduxjs/toolkit";
 import {fetchIdsProduct, fetchProducts, fetchProductsBrand} from "../thunk/fetchIdsProduct";
 
 type AppStatus = 'idle' | 'loading' | 'success' | 'failed'
@@ -33,9 +33,6 @@ const slice = createSlice({
             .addCase(fetchIdsProduct.fulfilled, (state, action) => {
                 state.ids = action.payload
             })
-            .addCase(fetchProducts.rejected, (state, action) => {
-                state.status = 'failed'
-            })
             .addCase(fetchProducts.fulfilled, (state, action) => {
                 if (action.payload) {
                     state.products = action.payload.filter(({id}, index, array) =>
@@ -45,11 +42,35 @@ const slice = createSlice({
                     )
                 }
             })
-            .addCase(fetchProductsBrand.fulfilled,(state, action) => {
+            .addCase(fetchProductsBrand.fulfilled, (state, action) => {
                 const brands = action.payload.filter(b => b !== null)
                 state.brands = brands.filter((item, index) => brands.indexOf(item) === index)
             })
+            .addMatcher(isPending(fetchProducts), (state, action) => {
+                console.log('loading')
+                state.status = 'loading'
+            })
+            .addMatcher(isFulfilled(fetchProducts), (state, action) => {
+                console.log('fulfilled')
+                state.status = 'success'
+            })
+            .addMatcher(isRejected, (state, action) => {
+                console.log('isRejected')
+                state.status = 'failed'
+            })
+            // .addMatcher(isPending, (state, action) => {
+            //     console.log('loading')
+            //     state.status = 'loading'
+            // })
+            // .addMatcher(isFulfilled, (state, action) => {
+            //     console.log('fulfilled')
+            //     state.status = 'success'
+            // })
+            // .addMatcher(isRejected, (state, action) => {
+            //     console.log('isRejected')
+            //     state.status = 'failed'
+            // })
 })
 
 export const {reducer: productReducer} = slice
-export const productThunk = {fetchIdsProduct, fetchProducts,fetchProductsBrand}
+export const productThunk = {fetchIdsProduct, fetchProducts, fetchProductsBrand}

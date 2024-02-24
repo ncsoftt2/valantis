@@ -91,9 +91,3 @@ export const fetchProductsBrand = createAsyncThunk<string[],void>(
     }
 )
 
-// export const fetchProductsByBrand = createAsyncThunk(
-//     'product/fetchProductsByBrand',
-//     async () => {
-//         const res = await
-//     }
-// )
