@@ -2,39 +2,6 @@ import {createAsyncThunk} from "@reduxjs/toolkit";
 import {productApi} from "../api/productApi";
 import {ProductType} from "../slice/slice";
 
-// export const fetchIdsProduct = createAsyncThunk<string[], { limit: number,offset:number,action:string, param?: string | number}>(
-//     'product/fetchIdsProduct',
-//     async ({offset,limit,action,param}) => {
-//         try {
-//             let payload
-//             if(typeof param === 'number') {
-//                 payload = {
-//                     action,
-//                     params: {price: param,offset,limit}
-//                 }
-//             } else {
-//                 payload = {
-//                     action,
-//                     params: {product: param,offset,limit}
-//                 }
-//             }
-//             const res = await productApi.fetchIds(payload)
-//             return res.data.result
-//         } catch (e) {
-//             console.log(e)
-//         }
-//     }
-// )
-
-
-
-// type PayloadType = {
-//     action: string
-//     params: {
-//         offset: number
-//         limit: number
-//     } & { product?: string } | { price?: number } | {brand?: string}
-// }
 type PayloadType = {
     action: string
     params: {
@@ -45,12 +12,14 @@ type PayloadType = {
 
 export const fetchIdsProduct = createAsyncThunk<string[], PayloadType>(
     'product/fetchIdsProduct',
-    async (payload) => {
+    async (payload, {rejectWithValue}) => {
         try {
             const res = await productApi.fetchIds(payload)
             return res.data.result
         } catch (e) {
-            // console.log(e)
+            console.log('THUNK FETCH IDS CATCH')
+            console.log(e)
+            return rejectWithValue({message: e})
         }
     }
 )
@@ -66,6 +35,7 @@ export const fetchProducts = createAsyncThunk<ProductType[], string[]>(
             const res = await productApi.fetchItems(payloadData)
             return res.data.result
         } catch (e) {
+            console.log('THUNK FETCH PRODUCTS CATCH')
             console.log(e)
             return rejectWithValue({message: e})
         }

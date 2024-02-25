@@ -1,14 +1,28 @@
 .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   border: none;
   cursor: pointer;
   padding: 8px 15px;
   border-radius: 4px;
   font-size: 16px;
+  background-color: transparent;
+}
+
+.primary {
   background-color: #3a4fff;
   color: #FFF;
-  transition: background-color .1s linear;
 
   &:hover {
     background-color: #6c7eff;
+  }
+}
+
+.text {
+  color: #ff6402;
+  &:hover {
+    color: #dc8349;
   }
 }

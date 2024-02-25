@@ -1,4 +1,4 @@
-import { createHashRouter } from "react-router-dom"
+import {createBrowserRouter} from "react-router-dom"
 import { App } from "./App"
 import {ProductPage} from "src/page/ProductPage";
 
@@ -10,7 +10,7 @@ export const RoutePath:Record<AppRouter, string> = {
     [AppRouter.MAIN]: '/',
 }
 
-export const router = createHashRouter([
+export const router = createBrowserRouter([
     {
         element: <App/>,
         children: [

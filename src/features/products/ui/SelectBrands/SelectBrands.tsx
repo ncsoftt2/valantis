@@ -1,4 +1,4 @@
-import {ChangeEvent, memo, useEffect, useState} from "react";
+import {ChangeEvent, memo, useEffect} from "react";
 import {useSearchParams} from "react-router-dom";
 import {useAppSelector} from "src/common/hooks/useAppSelector";
 import {useAppDispatch} from "src/common/hooks/useAppDispatch";

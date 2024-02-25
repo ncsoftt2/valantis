@@ -1,11 +1,11 @@
 import {ChangeEvent, memo, useState} from "react";
 import {productThunk} from "src/features/products/slice/slice";
-import {useSearchParams} from "react-router-dom";
 import {useAppDispatch} from "src/common/hooks/useAppDispatch";
-import { SelectBrands } from "../SelectBrands/SelectBrands";
+import {SelectBrands} from "../SelectBrands/SelectBrands";
 
 import s from './FilterProducts.module.scss'
-import { Button } from "src/common/ui/Button";
+import {Button} from "src/common/ui/Button";
+import {useProductPage} from "src/page/ProductPage/useProductPage";
 
 
 type Props = {
@@ -14,40 +14,22 @@ type Props = {
 }
 
 export const FilterProducts = memo((props: Props) => {
-    const {offset,limit} = props
+
+    const {setSearchParams,searchParams} = useProductPage()
+
+    const {offset, limit} = props
 
     const dispatch = useAppDispatch()
-
-    const [searchParams, setSearchParams] = useSearchParams({})
 
     const price = searchParams.get('price') === null ? 0 : Number(searchParams.get('price'))
 
     const [productName, setProductName] = useState('')
 
-
     const handleChangeProductName = (e: ChangeEvent<HTMLInputElement>) => {
         const target = e.currentTarget.value
-        setProductName(target.trim())
+        setProductName(target)
     }
 
-    // const handleClickSearchProductByName = () => {
-    //     if (productName.trim().length !== 0) {
-    //         searchParams.delete('offset')
-    //         searchParams.delete('price')
-    //         searchParams.set('action', 'filter')
-    //         searchParams.set('product', productName.trim())
-    //         setSearchParams(searchParams)
-    //         const payload = {
-    //             action: 'filter',
-    //             params: {
-    //                 product: productName.trim(),
-    //                 limit,
-    //                 offset
-    //             }
-    //         }
-    //         dispatch(productThunk.fetchIdsProduct(payload))
-    //     }
-    // }
     const handleClickSearchProductByName = () => {
         if (productName.trim().length !== 0) {
             searchParams.delete('offset')
@@ -74,7 +56,7 @@ export const FilterProducts = memo((props: Props) => {
         searchParams.delete('offset')
         searchParams.delete('product')
         setSearchParams(searchParams)
-        const payload = {action:'filter',params: {price:target,limit, offset}}
+        const payload = {action: 'filter', params: {price: target, limit, offset}}
         dispatch(productThunk.fetchIdsProduct(payload))
     }
 
@@ -95,7 +77,7 @@ export const FilterProducts = memo((props: Props) => {
             <div>
                 <input type="number" value={price} onChange={handleChangeFilterByPrice}/>
             </div>
-            <SelectBrands />
+            <SelectBrands/>
             <Button onClick={clearFilter}>сбросить фильтр</Button>
         </section>
     )

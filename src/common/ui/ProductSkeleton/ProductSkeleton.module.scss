@@ -1,19 +1,15 @@
 .products {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    color: #000;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap:10px;
+    padding: 10px;
 }
 
 .product {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    overflow: hidden;
-    width: calc(100% / 5 - 20px);
     border: 1px solid rgba(0, 0, 0, 0.17);
-}
-.product:nth-child(5n) {
-    width: calc(100% / 5);
+    overflow: hidden;
 }
 
 
@@ -26,33 +22,25 @@
     &__title {
         height: 25px;
         margin:5px;
-        border-radius: 5px;
         background-color: #C4C4C4;
     }
     &__block {
         width: 100px;
         height: 25px;
         margin:5px;
-        border-radius: 5px;
         background-color: #C4C4C4;
     }
     &__id {
         height: 10px;
         margin:5px;
-        border-radius: 5px;
         background-color: #C4C4C4;
     }
 }
 
-.skeleton_wrapper_items {
-    display:flex;
-    align-items: center;
-    justify-content: space-between;
-}
 
 
 .pulse {
-    animation: pulse 6s ease-in-out 2s infinite
+    animation: pulse 3s ease-in-out .5s infinite
 }
 
 @keyframes pulse {

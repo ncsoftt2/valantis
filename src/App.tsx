@@ -1,6 +1,5 @@
-import {Outlet, Route, Routes} from "react-router-dom";
+import { Route, Routes} from "react-router-dom";
 import {ProductPage} from "src/page/ProductPage";
-import {Suspense} from "react";
 
 export const App = () => {
     return (
@@ -11,14 +10,3 @@ export const App = () => {
         </div>
     )
 }
-
-
-// export const App = () => {
-//     return (
-//         <div>
-//             <Suspense>
-//                 <Outlet />
-//             </Suspense>
-//         </div>
-//     )
-// }

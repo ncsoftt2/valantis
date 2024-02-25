@@ -46,30 +46,20 @@ const slice = createSlice({
                 const brands = action.payload.filter(b => b !== null)
                 state.brands = brands.filter((item, index) => brands.indexOf(item) === index)
             })
-            .addMatcher(isPending(fetchProducts), (state, action) => {
-                console.log('loading')
+            .addMatcher(isPending(fetchProducts), (state) => {
                 state.status = 'loading'
             })
-            .addMatcher(isFulfilled(fetchProducts), (state, action) => {
-                console.log('fulfilled')
+            .addMatcher(isFulfilled, (state) => {
                 state.status = 'success'
             })
-            .addMatcher(isRejected, (state, action) => {
-                console.log('isRejected')
+            .addMatcher(isRejected(fetchIdsProduct), (state) => {
                 state.status = 'failed'
+                state.ids = []
             })
-            // .addMatcher(isPending, (state, action) => {
-            //     console.log('loading')
-            //     state.status = 'loading'
-            // })
-            // .addMatcher(isFulfilled, (state, action) => {
-            //     console.log('fulfilled')
-            //     state.status = 'success'
-            // })
-            // .addMatcher(isRejected, (state, action) => {
-            //     console.log('isRejected')
-            //     state.status = 'failed'
-            // })
+            .addMatcher(isRejected(fetchProducts), (state) => {
+                state.status = 'failed'
+                state.products = []
+            })
 })
 
 export const {reducer: productReducer} = slice
