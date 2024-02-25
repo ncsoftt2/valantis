@@ -26,7 +26,7 @@ export const SelectBrands = memo(() => {
 
     useEffect(() => {
         dispatch(productThunk.fetchProductsBrand())
-    }, [])
+    }, [dispatch])
 
     return (
         <select className={s.select} onChange={handleChange}>

@@ -15,7 +15,7 @@ export const Products = memo(() => {
     const dispatch = useAppDispatch()
     useEffect(() => {
         dispatch(productThunk.fetchProducts(productIds))
-    }, [productIds])
+    }, [dispatch, productIds])
 
     return (
         <>
