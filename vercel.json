@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "builds": [{ "src": "package.json", "use": "@vercel/static-build" }],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "headers": { "Access-Control-Allow-Origin": "*" },
+      "continue": true
+    }
+  ],
+  "alias": "https://valantis-ten.vercel.app/",
+  "env": {
+    "MY_ENV_VAR": "my-value"
+  }
+}
