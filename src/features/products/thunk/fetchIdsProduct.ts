@@ -17,7 +17,7 @@ export const fetchIdsProduct = createAsyncThunk<string[], PayloadType>(
             const res = await productApi.fetchIds(payload)
             return res.data.result
         } catch (e) {
-            console.log(e)
+
             return rejectWithValue({message: e})
         }
     }
@@ -34,7 +34,7 @@ export const fetchProducts = createAsyncThunk<ProductType[], string[]>(
             const res = await productApi.fetchItems(payloadData)
             return res.data.result
         } catch (e) {
-            console.log(e)
+
             return rejectWithValue({message: e})
         }
     }
@@ -53,7 +53,6 @@ export const fetchProductsBrand = createAsyncThunk<string[],void>(
             const res = await productApi.fetchBrands(payload)
             return res.data.result
         } catch (e) {
-            console.log(e)
             return rejectWithValue({message:e})
         }
     }

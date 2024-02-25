@@ -39,7 +39,7 @@ const ProductPage = () => {
             }
         }
         dispatch(productThunk.fetchIdsProduct(payload))
-    }, [offset, action, dispatch, initialKey, param, limit])
+    }, [offset, action, dispatch])
     // useEffect(() => {
     //     const payload = {
     //         action,

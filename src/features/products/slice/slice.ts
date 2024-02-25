@@ -24,6 +24,8 @@ const initialState: InitialStateType = {
     brands: []
 }
 
+
+
 const slice = createSlice({
     name: 'product',
     initialState,
