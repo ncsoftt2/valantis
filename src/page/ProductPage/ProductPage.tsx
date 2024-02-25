@@ -40,20 +40,8 @@ const ProductPage = () => {
         }
         dispatch(productThunk.fetchIdsProduct(payload))
     }, [offset, action, dispatch])
-    // useEffect(() => {
-    //     const payload = {
-    //         action,
-    //         params: {
-    //             [initialKey]: param,
-    //             offset,
-    //             limit
-    //         }
-    //     }
-    //     dispatch(productThunk.fetchIdsProduct(payload))
-    // }, [offset,action, dispatch])
+
     const rightButton = productIds && productIds.length === 50
-
-
 
     return (
         <section className={s.products_list}>
