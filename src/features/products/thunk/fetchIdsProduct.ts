@@ -17,7 +17,6 @@ export const fetchIdsProduct = createAsyncThunk<string[], PayloadType>(
             const res = await productApi.fetchIds(payload)
             return res.data.result
         } catch (e) {
-            console.log('THUNK FETCH IDS CATCH')
             console.log(e)
             return rejectWithValue({message: e})
         }
@@ -35,7 +34,6 @@ export const fetchProducts = createAsyncThunk<ProductType[], string[]>(
             const res = await productApi.fetchItems(payloadData)
             return res.data.result
         } catch (e) {
-            console.log('THUNK FETCH PRODUCTS CATCH')
             console.log(e)
             return rejectWithValue({message: e})
         }

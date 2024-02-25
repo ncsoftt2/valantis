@@ -1,4 +1,5 @@
 import {instance} from "src/api/instance";
+import axios from "axios";
 
 type GetIdsPayload<T> = {
     action: string
@@ -12,12 +13,12 @@ type PayloadArgs = {
 
 export const productApi = {
     fetchIds(payload:GetIdsPayload<PayloadArgs>) {
-        return instance.post('',payload)
+        return axios.post('http://api.valantis.store:40000/',payload)
     },
     fetchItems(payload: GetIdsPayload<{ ids: string[] }>) {
-        return instance.post('', payload)
+        return axios.post('http://api.valantis.store:40000/', payload)
     },
     fetchBrands(payload: GetIdsPayload<{field: string}>) {
-        return instance.post('',payload)
+        return axios.post('http://api.valantis.store:40000/',payload)
     }
 }

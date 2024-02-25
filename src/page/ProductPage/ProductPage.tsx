@@ -40,7 +40,17 @@ const ProductPage = () => {
         }
         dispatch(productThunk.fetchIdsProduct(payload))
     }, [offset, action, dispatch, initialKey, param, limit])
-
+    // useEffect(() => {
+    //     const payload = {
+    //         action,
+    //         params: {
+    //             [initialKey]: param,
+    //             offset,
+    //             limit
+    //         }
+    //     }
+    //     dispatch(productThunk.fetchIdsProduct(payload))
+    // }, [offset,action, dispatch])
     const rightButton = productIds && productIds.length === 50
 
 
