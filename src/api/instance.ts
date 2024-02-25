@@ -11,7 +11,7 @@ const xAuth = generateXAuthHeader()
 
 
 export const instance = axios.create({
-    // baseURL: 'http://api.valantis.store:40000/',
+    baseURL: 'http://api.valantis.store:40000/',
     headers: {
         'Content-Type': 'application/json',
         'X-Auth': xAuth
