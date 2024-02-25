@@ -28,17 +28,18 @@ const ProductPage = () => {
         searchParams.set('offset', (offset - 50).toString())
         setSearchParams(searchParams)
     }
-    const payload = {
-        action,
-        params: {
-            [initialKey]: param,
-            offset,
-            limit
-        }
-    }
+
     useEffect(() => {
+        const payload = {
+            action,
+            params: {
+                [initialKey]: param,
+                offset,
+                limit
+            }
+        }
         dispatch(productThunk.fetchIdsProduct(payload))
-    }, [offset,action])
+    }, [offset, action, dispatch, initialKey, param, limit])
 
     const rightButton = productIds && productIds.length === 50
 
