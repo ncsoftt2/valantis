@@ -21,6 +21,7 @@ export const Products = memo(({productIds}: Props) => {
         dispatch(productThunk.fetchProducts(productIds))
     }, [productIds])
 
+
     return (
         <>
             {getItemsStatus === 'loading'
