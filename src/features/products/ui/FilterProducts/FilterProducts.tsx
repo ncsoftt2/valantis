@@ -1,4 +1,4 @@
-import {ChangeEvent, memo, useEffect, useState} from "react";
+import {ChangeEvent, memo, useEffect, useState, KeyboardEvent} from "react";
 import {productThunk} from "src/features/products/slice/slice";
 import {useAppDispatch} from "src/common/hooks/useAppDispatch";
 import {SelectBrands} from "../SelectBrands/SelectBrands";
@@ -47,6 +47,12 @@ export const FilterProducts = memo((props: Props) => {
         }
     }
 
+    const searchProductOnEnter = (e: KeyboardEvent<HTMLInputElement>) => {
+        if(e.key === 'Enter') {
+            handleClickSearchProductByName()
+        }
+    }
+
     const handleChangeFilterByPrice = (e: ChangeEvent<HTMLInputElement>) => {
         setCurrentPrice(prices[+e.target.value - 1])
     }
@@ -60,6 +66,7 @@ export const FilterProducts = memo((props: Props) => {
         const payload = {action: 'filter', params: {price: currentPrice, limit, offset}}
         dispatch(productThunk.fetchIdsProduct(payload))
     }
+
     useEffect(() => {
         dispatch(productThunk.fetchProductsPrice())
     }, [])
@@ -70,6 +77,7 @@ export const FilterProducts = memo((props: Props) => {
                        className={s.input}
                        value={productName}
                        onChange={handleChangeProductName}
+                       onKeyDown={searchProductOnEnter}
                 />
                 <Button onClick={handleClickSearchProductByName}>найти</Button>
             </div>
