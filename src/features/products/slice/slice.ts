@@ -37,6 +37,7 @@ const slice = createSlice({
     extraReducers: builder =>
         builder
             .addCase(fetchIdsProduct.pending, (state) => {
+                state.ids = []
                 state.getIdsStatus = 'loading'
             })
             .addCase(fetchProducts.pending, (state) => {

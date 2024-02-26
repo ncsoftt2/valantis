@@ -10,6 +10,7 @@ import {Arrow} from "src/common/assets/icons";
 import cn from "classnames";
 
 import s from "./ProductPage.module.scss";
+import {ErrorInfo} from "src/common/ui/Error";
 
 
 const ProductPage = () => {
@@ -28,7 +29,6 @@ const ProductPage = () => {
         handleChangeNext
     } = useProductPage()
 
-    const idsStatus = getIdsStatus === 'failed'
     const rightButton = productIds && productIds.length === 50
     useEffect(() => {
         const payload = {
@@ -46,6 +46,7 @@ const ProductPage = () => {
         <section className={s.products_list}>
             <FilterProducts limit={limit} offset={offset} clearFilter={clearFilter} price={price}/>
             {getIdsStatus === 'loading' && <Preloader/>}
+            {getIdsStatus === 'failed' && <ErrorInfo/>}
             {productIds && productIds.length > 0 && <Products productIds={productIds}/>}
             {offset > 0 &&
                 <Button className={cn(s.btn_item, s.btn_item_left)}
