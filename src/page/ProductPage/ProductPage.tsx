@@ -10,7 +10,6 @@ import {Arrow} from "src/common/assets/icons";
 import cn from "classnames";
 
 import s from "./ProductPage.module.scss";
-import {toast} from "react-toastify";
 
 
 const ProductPage = () => {
@@ -41,7 +40,7 @@ const ProductPage = () => {
             }
         }
         dispatch(productThunk.fetchIdsProduct(payload))
-    }, [offset, action, idsStatus, param])
+    }, [offset, action, param])
 
     return (
         <section className={s.products_list}>

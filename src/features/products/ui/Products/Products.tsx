@@ -4,7 +4,6 @@ import {memo, useEffect} from "react";
 import {productThunk} from "src/features/products/slice/slice";
 import s from "./Products.module.scss";
 import {ProductSkeleton} from "src/common/ui/ProductSkeleton/ProductSkeleton";
-import {toast} from "react-toastify";
 
 
 const IMG_URL = 'https://juvelirnyj-lombard.ru/media/products/2707e2be37/zolotoe-kolco-s-brilliantami_preview_r6Ohq2H.webp'
@@ -20,7 +19,7 @@ export const Products = memo(({productIds}: Props) => {
     const itemsStatus = getItemsStatus === 'failed'
     useEffect(() => {
         dispatch(productThunk.fetchProducts(productIds))
-    }, [dispatch, productIds, itemsStatus])
+    }, [dispatch, productIds])
 
     return (
         <>
