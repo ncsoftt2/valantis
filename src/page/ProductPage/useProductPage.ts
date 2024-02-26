@@ -1,19 +1,5 @@
 import {useSearchParams} from "react-router-dom";
 
-// export const useProductPage = () => {
-//     const [searchParams, setSearchParams] = useSearchParams(new URLSearchParams(window.location.search))
-//     const keys = searchParams.keys();
-//     let initialKey = keys.next().value;
-//     if (initialKey === 'action') {
-//         initialKey = keys.next().value;
-//     }
-//     const clearFilter = () => {
-//         setSearchParams({})
-//     }
-//     const action = searchParams.get('action') || 'get_ids'
-//     const param = searchParams.get('product') || Number(searchParams.get('price')) || searchParams.get('brand') || ''
-//     return {action,param, initialKey,searchParams,setSearchParams,clearFilter}
-// }
 export const useProductPage = () => {
     const [searchParams, setSearchParams] = useSearchParams(new URLSearchParams(window.location.search))
     const offset = Number(searchParams.get('offset')) || 0
@@ -30,6 +16,16 @@ export const useProductPage = () => {
     const clearFilter = () => {
         setSearchParams({})
     }
+
+    const handleChangeNext = () => {
+        searchParams.set('offset', (offset + 50).toString())
+        setSearchParams(searchParams)
+    }
+    const handleChangePrev = () => {
+        searchParams.set('offset', (offset - 50).toString())
+        setSearchParams(searchParams)
+    }
+
     return {
         offset,
         limit,
@@ -39,6 +35,8 @@ export const useProductPage = () => {
         initialKey,
         searchParams,
         setSearchParams,
-        clearFilter
+        clearFilter,
+        handleChangeNext,
+        handleChangePrev
     }
 }

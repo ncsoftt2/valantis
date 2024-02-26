@@ -10,20 +10,20 @@ type PayloadType = {
     } & { [key:string]: string | number}
 }
 
-export const fetchIdsProduct = createAsyncThunk<string[], PayloadType>(
+export const fetchIdsProduct = createAsyncThunk<string[], PayloadType, {rejectValue: {message: string}}>(
     'product/fetchIdsProduct',
     async (payload, {rejectWithValue}) => {
         try {
             const res = await productApi.fetchIds(payload)
             return res.data.result
         } catch (e) {
-
-            return rejectWithValue({message: e})
+            const err = e as {message: string}
+            return rejectWithValue({message: err.message})
         }
     }
 )
 
-export const fetchProducts = createAsyncThunk<ProductType[], string[]>(
+export const fetchProducts = createAsyncThunk<ProductType[], string[],{rejectValue: {message: string}}>(
     'product/fetchProducts',
     async (arg, {rejectWithValue}) => {
         try {
@@ -34,8 +34,9 @@ export const fetchProducts = createAsyncThunk<ProductType[], string[]>(
             const res = await productApi.fetchItems(payloadData)
             return res.data.result
         } catch (e) {
-
-            return rejectWithValue({message: e})
+            console.log(e)
+            const err = e as {message: string}
+            return rejectWithValue({message: err.message})
         }
     }
 )
@@ -53,6 +54,7 @@ export const fetchProductsBrand = createAsyncThunk<string[],void>(
             const res = await productApi.fetchBrands(payload)
             return res.data.result
         } catch (e) {
+            console.log(e)
             return rejectWithValue({message:e})
         }
     }

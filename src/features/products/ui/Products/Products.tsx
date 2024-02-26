@@ -4,54 +4,16 @@ import {memo, useEffect} from "react";
 import {productThunk} from "src/features/products/slice/slice";
 import s from "./Products.module.scss";
 import {ProductSkeleton} from "src/common/ui/ProductSkeleton/ProductSkeleton";
+import {toast} from "react-toastify";
 
 
 const IMG_URL = 'https://juvelirnyj-lombard.ru/media/products/2707e2be37/zolotoe-kolco-s-brilliantami_preview_r6Ohq2H.webp'
-
-// export const Products = memo(() => {
-//     const products = useAppSelector(state => state.products.products)
-//     const status = useAppSelector(state => state.products.status)
-//     const productIds = useAppSelector(state => state.products.ids)
-//     const dispatch = useAppDispatch()
-//     useEffect(() => {
-//         dispatch(productThunk.fetchProducts(productIds))
-//     }, [dispatch, productIds])
-//
-//     return (
-//         <>
-//             {status === 'loading'
-//                 ? <ProductSkeleton />
-//                 : (
-//                 <ul className={s.products}>
-//
-//                     {products.map((p) => {
-//                         return (
-//                             <li className={s.product} key={p.id}>
-//                                 <img className={s.img} src={IMG_URL} alt={p.product}/>
-//                                 <div className={s.product_title}>{p.product}</div>
-//                                 <div className={s.product_items}>
-//                                     <div>{p.price.toLocaleString('ru-RU')} &#8381;</div>
-//                                     <div className={s.product_item}>
-//                                         бренд: <span className={s.product_item_brand}>{p.brand || 'неизвестно'}</span>
-//                                     </div>
-//                                 </div>
-//                                 <div className={s.product_id}>{p.id}</div>
-//                             </li>
-//                         )
-//                     })}
-//                 </ul>
-//             )}
-//         </>
-//     )
-// })
-
-
 
 type Props = {
     productIds: string[]
 }
 
-export const Products = memo(({productIds} :Props) => {
+export const Products = memo(({productIds}: Props) => {
     const dispatch = useAppDispatch()
     const getItemsStatus = useAppSelector(state => state.products.getItemsStatus)
     const products = useAppSelector(state => state.products.products)
@@ -63,27 +25,28 @@ export const Products = memo(({productIds} :Props) => {
     return (
         <>
             {getItemsStatus === 'loading'
-                ? <ProductSkeleton />
+                ? <ProductSkeleton/>
                 : (
-                <ul className={s.products}>
+                    <ul className={s.products}>
 
-                    {products.map((p) => {
-                        return (
-                            <li className={s.product} key={p.id}>
-                                <img className={s.img} src={IMG_URL} alt={p.product}/>
-                                <div className={s.product_title}>{p.product}</div>
-                                <div className={s.product_items}>
-                                    <div>{p.price.toLocaleString('ru-RU')} &#8381;</div>
-                                    <div className={s.product_item}>
-                                        бренд: <span className={s.product_item_brand}>{p.brand || 'неизвестно'}</span>
+                        {products.map((p) => {
+                            return (
+                                <li className={s.product} key={p.id}>
+                                    <img className={s.img} src={IMG_URL} alt={p.product}/>
+                                    <div className={s.product_title}>{p.product}</div>
+                                    <div className={s.product_items}>
+                                        <div>{p.price.toLocaleString('ru-RU')} &#8381;</div>
+                                        <div className={s.product_item}>
+                                            бренд: <span
+                                            className={s.product_item_brand}>{p.brand || 'неизвестно'}</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className={s.product_id}>{p.id}</div>
-                            </li>
-                        )
-                    })}
-                </ul>
-            )}
+                                    <div className={s.product_id}>{p.id}</div>
+                                </li>
+                            )
+                        })}
+                    </ul>
+                )}
         </>
     )
 })

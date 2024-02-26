@@ -23,14 +23,13 @@ export const SelectBrands = memo(() => {
         dispatch(productThunk.fetchIdsProduct(payload))
     }
 
-
     useEffect(() => {
         dispatch(productThunk.fetchProductsBrand())
     }, [dispatch])
 
     return (
         <select className={s.select} onChange={handleChange}>
-            <option disabled>Выбрать бренд</option>
+            <option disabled value=''>Выбрать бренд</option>
             {
                 brands.map(b => (
                     <option key={b}>{b}</option>
