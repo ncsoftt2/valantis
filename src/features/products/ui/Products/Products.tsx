@@ -21,40 +21,9 @@ export const Products = memo(({productIds}: Props) => {
         dispatch(productThunk.fetchProducts(productIds))
     }, [productIds])
 
-
     return (
         <>
-            {getItemsStatus === 'loading'
-                ? <ProductSkeleton/>
-                : getItemsStatus === 'failed'
-                    ? <ErrorInfo/>
-                    : (
-                        <ul className={s.products}>
 
-                            {products.map((p) => {
-                                const imgUrl = getImageUrl()
-                                return (
-                                    <li className={s.product} key={p.id}>
-                                        <div className={s.product_img_wrapper}>
-                                            <Tilt>
-                                                <img className={s.img} src={PRODUCTS_IMAGES_URL[imgUrl]}
-                                                     alt={p.product}/>
-                                            </Tilt>
-                                            <div className={s.product_id}>{p.id}</div>
-                                        </div>
-                                        <div className={s.product_title}>{p.product}</div>
-                                        <div className={s.product_items}>
-                                            <div>{p.price.toLocaleString('ru-RU')} &#8381;</div>
-                                            <div className={s.product_item}>
-                                                бренд: <span
-                                                className={s.product_item_brand}>{p.brand || 'неизвестно'}</span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                )
-                            })}
-                        </ul>
-                    )}
         </>
     )
 })
