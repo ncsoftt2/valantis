@@ -1,6 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
-import {fetchIdsProduct, fetchProducts, fetchProductsBrand} from "../thunk/fetchIdsProduct";
+import {fetchIdsProduct, fetchProducts, fetchProductsBrand, fetchProductsPrice} from "../thunk/fetchIdsProduct";
+import { removeDuplicatesAndSort} from "src/common/utils/removeDuplicates";
 
 type AppStatus = 'idle' | 'loading' | 'success' | 'failed'
 
@@ -18,6 +19,7 @@ type InitialStateType = {
     products: ProductType[]
     status: AppStatus
     brands: string[]
+    prices: number[]
 }
 
 const initialState: InitialStateType = {
@@ -26,7 +28,8 @@ const initialState: InitialStateType = {
     ids: [] as string[],
     products: [] as ProductType[],
     status: 'idle',
-    brands: []
+    brands: [],
+    prices: []
 }
 
 
@@ -38,6 +41,7 @@ const slice = createSlice({
         builder
             .addCase(fetchIdsProduct.pending, (state) => {
                 state.ids = []
+                state.products = []
                 state.getIdsStatus = 'loading'
             })
             .addCase(fetchProducts.pending, (state) => {
@@ -59,6 +63,9 @@ const slice = createSlice({
                 const brandsFilter = action.payload.filter(b => b !== null)
                 state.brands = brandsFilter.filter((item, index) => brandsFilter.indexOf(item) === index)
             })
+            .addCase(fetchProductsPrice.fulfilled, (state, action) => {
+                state.prices = removeDuplicatesAndSort(action.payload)
+            })
             .addCase(fetchIdsProduct.rejected, (state,action) => {
                 if(action.payload) {
                     toast.error(action.payload.message)
@@ -74,4 +81,4 @@ const slice = createSlice({
 })
 
 export const {reducer: productReducer} = slice
-export const productThunk = {fetchIdsProduct, fetchProducts, fetchProductsBrand}
+export const productThunk = {fetchIdsProduct, fetchProducts, fetchProductsBrand, fetchProductsPrice}

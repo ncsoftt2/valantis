@@ -5,9 +5,8 @@ import {productThunk} from "src/features/products/slice/slice";
 import s from "./Products.module.scss";
 import {ProductSkeleton} from "src/common/ui/ProductSkeleton/ProductSkeleton";
 import {ErrorInfo} from "src/common/ui/Error";
-
-
-// const IMG_URL = 'https://juvelirnyj-lombard.ru/media/products/2707e2be37/zolotoe-kolco-s-brilliantami_preview_r6Ohq2H.webp'
+import {getImageUrl} from "src/common/utils/getImageUrl";
+import {PRODUCTS_IMAGES_URL} from "src/common/const";
 
 type Props = {
     productIds: string[]
@@ -31,9 +30,10 @@ export const Products = memo(({productIds}: Props) => {
                         <ul className={s.products}>
 
                             {products.map((p) => {
+                                const imgUrl = getImageUrl()
                                 return (
                                     <li className={s.product} key={p.id}>
-                                        {/*<img className={s.img} src={IMG_URL} alt={p.product}/>*/}
+                                        <img className={s.img} src={PRODUCTS_IMAGES_URL[imgUrl]} alt={p.product}/>
                                         <div className={s.product_title}>{p.product}</div>
                                         <div className={s.product_items}>
                                             <div>{p.price.toLocaleString('ru-RU')} &#8381;</div>

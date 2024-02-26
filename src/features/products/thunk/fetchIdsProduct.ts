@@ -60,3 +60,22 @@ export const fetchProductsBrand = createAsyncThunk<string[],void>(
     }
 )
 
+export const fetchProductsPrice = createAsyncThunk<number[],void>(
+    'product/fetchProductsPrice',
+    async (_, {rejectWithValue}) => {
+        try {
+            const payload = {
+                action:'get_fields',
+                params: {
+                    field: 'price',
+                }
+            }
+            const res = await productApi.fetchBrands(payload)
+            return res.data.result
+        } catch (e) {
+            console.log(e)
+            return rejectWithValue({message:e})
+        }
+    }
+)
+

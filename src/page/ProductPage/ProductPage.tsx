@@ -42,6 +42,7 @@ const ProductPage = () => {
         dispatch(productThunk.fetchIdsProduct(payload))
     }, [offset, action, param])
 
+
     return (
         <section className={s.products_list}>
             <FilterProducts limit={limit} offset={offset} clearFilter={clearFilter} price={price}/>

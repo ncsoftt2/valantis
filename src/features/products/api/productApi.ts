@@ -19,5 +19,5 @@ export const productApi = {
     },
     fetchBrands(payload: GetIdsPayload<{field: string}>) {
         return instance.post('',payload)
-    }
+    },
 }

@@ -54,3 +54,27 @@
         opacity: 1
     }
 }
+
+
+@media screen and (width <= 900px) {
+    .products {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+}
+@media screen and (width <= 700px) {
+    .products {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+}
+
+@media screen and (width <= 500px) {
+    .products {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .img {
+        height: 200px;
+        overflow: hidden;
+    }
+}
